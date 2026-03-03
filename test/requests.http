@@ -82,7 +82,8 @@ GET {{hcql}}/Flights {{cql}} {
 }
 ###
 
-POST {{hcql}} {{cql}} SELECT FROM $OData {
+POST {{hcql}}
+Accept: application/octet-stream{{cql}} SELECT FROM $OData {
   '$metadata#Flights' as ![@odata.context],
   count(Flights.ID,Flights.date) as ![@odata.count],
   Flights[order by ID limit 30 offset 0] as value {
