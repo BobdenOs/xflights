@@ -1,7 +1,7 @@
 
-@odata = http://localhost:4005/odata/v4/flights
-@rest = http://localhost:4005/rest/flights
-@hcql = http://localhost:4005/hcql/flights
+@odata = http://localhost:4005/odata/v4/admin
+@rest = http://localhost:4005/rest/data
+@hcql = http://localhost:4005/hcql/data
 
 @cql = \n Content-Type: text/plain \n\n
 
@@ -79,5 +79,22 @@ GET {{hcql}}/Flights {{cql}} {
   flightDate as ![date],
   connection.departureTime as ![departure],
   connection.arrivalTime as ![arrival],
+}
+###
+
+POST {{hcql}} {{cql}} SELECT FROM $OData {
+  '$metadata#Flights' as ![@odata.context],
+  count(Flights.ID,Flights.date) as ![@odata.count],
+  Flights[order by ID limit 30 offset 0] as value {
+    ID,
+    date,
+    aircraft,
+    price,
+    currency_code,
+    free_seats,
+    departure,
+    arrival,
+    distance,
+  },
 }
 ###

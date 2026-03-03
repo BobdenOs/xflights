@@ -8,6 +8,14 @@ using sap.capire.flights as x from '../db/schema';
 @data.product @hcql @rest @odata @graphql
 service sap.capire.flights.data {
 
+  entity $OData {
+    OData: Boolean; // one physical column is required for an entity to exist
+    Flights: Association to many Flights on true;
+    Airlines: Association to many Airlines on  true;
+    Airports: Association to many Airports on  true;
+    Supplements: Association to many Supplements on true;
+  }
+
   // Serve Flights data via denormalized view with flattened FlightConnections
   @readonly entity Flights as select from x.Flights left join x.FlightConnections on ID = flight.ID {
     key ID, key date, *
