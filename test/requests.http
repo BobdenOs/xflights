@@ -99,3 +99,36 @@ Accept: application/octet-stream{{cql}} SELECT FROM $OData {
   },
 }
 ###
+
+POST {{hcql}}
+Accept: application/octet-stream
+Content-Type: application/json
+
+{"SELECT":{
+  "one": true,
+  "from":{"ref":["$OData"]},
+  "columns":[
+    {"val":"$metadata#Flights","as":"@odata.context"},
+    {"func":"count","args":[{"ref":["Flights","ID"]},{"ref":["Flights","date"]}],"as":"@odata.count"},
+    {"ref":[
+      {
+        "id":"Flights",
+        "orderBy":[{"ref":["ID"]}],
+        "limit":{"rows":{"val":30},"offset":{"val":0}}}
+      ],
+      "expand":[
+        {"ref":["ID"]},
+        {"ref":["date"]},
+        {"ref":["aircraft"]},
+        {"ref":["price"]},
+        {"ref":["currency_code"]},
+        {"ref":["free_seats"]},
+        {"ref":["departure"]},
+        {"ref":["arrival"]},
+        {"ref":["distance"]}
+      ],
+      "as":"value"
+    }
+  ]
+}}
+###
