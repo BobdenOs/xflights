@@ -114,8 +114,8 @@ Content-Type: application/json
       {
         "id":"Flights",
         "orderBy":[{"ref":["ID"]}],
-        "limit":{"rows":{"val":30},"offset":{"val":0}}}
-      ],
+        "limit":{"rows":{"val":30},"offset":{"val":0}}
+      }],
       "expand":[
         {"ref":["ID"]},
         {"ref":["date"]},
@@ -129,6 +129,34 @@ Content-Type: application/json
       ],
       "as":"value"
     }
+  ]
+}}
+###
+
+POST {{hcql}}
+Accept: application/octet-stream
+Content-Type: application/json
+
+{"SELECT":{
+  "one": true,
+  "from":{"ref":[
+    "$OData",
+    {
+      "id":"Flights",
+      "where":[{"ref":["ID"]},"=",{"val":"EA0018"},"and",{"ref":["date"]},"=",{"val":"2024-06-06"}]
+    }
+  ]},
+  "columns": [
+    {"val":"$metadata#Flights/$entity","as":"@odata.context"},
+    {"ref":["ID"]},
+    {"ref":["date"]},
+    {"ref":["aircraft"]},
+    {"ref":["price"]},
+    {"ref":["currency_code"]},
+    {"ref":["free_seats"]},
+    {"ref":["departure"]},
+    {"ref":["arrival"]},
+    {"ref":["distance"]}
   ]
 }}
 ###
